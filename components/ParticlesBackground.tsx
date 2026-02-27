@@ -9,8 +9,8 @@ export default function ParticlesBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const context = canvas.getContext("2d");
-    if (!context) return;
+    // 🔥 Type assertion fixes Vercel TypeScript error
+    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
 
     const resize = () => {
       canvas.width = window.innerWidth;
