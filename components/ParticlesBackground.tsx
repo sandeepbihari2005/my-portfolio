@@ -1,49 +1,69 @@
-useEffect(() => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
+"use client";
 
-  const context = canvas.getContext("2d");
-  if (!context) return;
+import { useEffect, useRef } from "react";
 
-  const resize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  };
+export default function ParticlesBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  resize();
-  window.addEventListener("resize", resize);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-  const particles = Array.from({ length: 70 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 0.2,
-    vy: (Math.random() - 0.5) * 0.2,
-    size: Math.random() * 1.2 + 0.5,
-    alpha: Math.random() * 0.5 + 0.2
-  }));
+    const context = canvas.getContext("2d");
+    if (!context) return;
 
-  function animate() {
-    if (!context) return;   // 🔥 important safety line
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    resize();
+    window.addEventListener("resize", resize);
 
-    particles.forEach(p => {
-      p.x += p.vx;
-      p.y += p.vy;
+    const particles = Array.from({ length: 70 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+      size: Math.random() * 1.2 + 0.5,
+      alpha: Math.random() * 0.5 + 0.2,
+    }));
 
-      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    function animate() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-      context.beginPath();
-      context.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      context.fillStyle = `rgba(255,255,255,${p.alpha})`;
-      context.fill();
-    });
+      particles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
 
-    requestAnimationFrame(animate);
-  }
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
-  animate();
+        context.beginPath();
+        context.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        context.fillStyle = `rgba(255,255,255,${p.alpha})`;
+        context.fill();
+      });
 
-  return () => window.removeEventListener("resize", resize);
-}, []);
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: -1,
+        pointerEvents: "none",
+      }}
+    />
+  );
+}
