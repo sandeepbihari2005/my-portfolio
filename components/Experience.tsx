@@ -5,11 +5,18 @@ import { motion } from "framer-motion";
 export default function Experience() {
   const experiences = [
     {
-      role: "Web Development Intern",
-      company: "RSP",
-      duration: "30 Days Internship",
+      role: "Ethical Hacking Intern",
+      company: "EduSkills Academy",
+      duration: "10 Weeks",
       description:
-        "Completed a 30-day internship program focused on web development. Worked on frontend fundamentals, responsive design, and basic project implementation."
+        "Completed a 10-week internship in Ethical Hacking. Learned network security, social engineering, malware analysis, Kali Linux tools, vulnerability assessment, and basic web application penetration testing."
+    },
+    {
+      role: "Vocational Trainee",
+      company: "Rourkela Steel Plant (SAIL)",
+      duration: "May 26, 2025 – June 24, 2025",
+      description:
+        "Completed vocational training at the Environmental Engineering Department of Rourkela Steel Plant. Gained exposure to industrial processes and environmental management practices in a large-scale steel manufacturing plant."
     }
   ];
 
@@ -20,7 +27,7 @@ export default function Experience() {
         <h2 className="text-4xl font-bold tracking-tight text-purple-400">
           Experience
         </h2>
-        
+
         <p className="text-gray-400 mt-2 max-w-xl">
           Professional training and internship experience.
         </p>
@@ -49,21 +56,13 @@ export default function Experience() {
             className="rounded-2xl border border-gray-700 bg-white/5 backdrop-blur-md p-7 hover:border-purple-500 transition"
           >
             <div className="flex justify-between items-start mb-3">
-              <h3 className="text-xl font-semibold">
-                {exp.role}
-              </h3>
-              <span className="text-sm text-gray-400">
-                {exp.duration}
-              </span>
+              <h3 className="text-xl font-semibold">{exp.role}</h3>
+              <span className="text-sm text-gray-400">{exp.duration}</span>
             </div>
 
-            <p className="text-purple-400 mb-3">
-              {exp.company}
-            </p>
+            <p className="text-purple-400 mb-3">{exp.company}</p>
 
-            <p className="text-gray-400 leading-relaxed">
-              {exp.description}
-            </p>
+            <p className="text-gray-400 leading-relaxed">{exp.description}</p>
           </motion.div>
         ))}
       </motion.div>
